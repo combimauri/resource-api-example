@@ -45,10 +45,7 @@ export class ResourceTestService {
       loader: () => this.#http.get<PokeResult>(this.#pokeUrl),
     });
 
-    pokeResource = httpResource<PokeResult>(() => ({
-      url: this.#pokeUrl,
-      method: 'GET',
-    }));
+    pokeResource = httpResource<PokeResult>(this.#pokeUrl);
 
     return pokeResource;
   }
@@ -62,6 +59,11 @@ export class ResourceTestService {
       request: () => selectedUrlSignal(),
       loader: ({ request: pokeUrl }) => this.#http.get<Pokemon>(pokeUrl),
     });
+
+    pokeResource = httpResource(() => ({
+      url: selectedUrlSignal(),
+      method: 'GET',
+    }));
 
     return pokeResource;
   }
